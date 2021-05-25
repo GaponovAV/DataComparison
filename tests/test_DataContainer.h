@@ -3,6 +3,8 @@
 #include "../lib/headers/DataContainer.h"
 
 #include <optional>
+#include <istream>
+#include <memory>
 
 namespace test_structs {
 
@@ -14,30 +16,10 @@ struct test_Data
 
 	static test_Data create(const std::vector<double> &doubleVector
 	                      , const std::vector<char> &charVector
-	                      , const std::vector<int> &intVector) {
-		auto testData = test_Data();
-		testData.m_doubleVector = doubleVector;
-		testData.m_charVector = charVector;
-		testData.m_intVector = intVector;
-
-		return testData;
-	};
-	static test_Data create(const std::vector<double> &vector) {
-		auto testData = test_Data();
-		testData.m_doubleVector = vector;
-		return testData;
-	};
-	static test_Data create(const std::vector<char> &vector) {
-		auto testData = test_Data();
-		testData.m_charVector = vector;
-		return testData;
-	};
-	static test_Data create(const std::vector<int> &vector) {
-		auto testData = test_Data();
-		testData.m_intVector = vector;
-		return testData;
-	};
-	
+	                      , const std::vector<int> &intVector);
+	static test_Data create(const std::vector<double> &vector);
+	static test_Data create(const std::vector<char> &vector);
+	static test_Data create(const std::vector<int> &vector);
 };
 
 }
@@ -45,16 +27,23 @@ struct test_Data
 namespace test_function {
 
 template<typename ...Args>
-test_structs::test_Data init(const Args&... args) {
-	const auto testDataResult = test_structs::test_Data::create(args...);
-}
+test_structs::test_Data init(Args&&... args);
 
 }
 
 namespace test_class {
 class Test {
-	void test_operators();
+public:
+	void test_operators();;
 	void test_base();
 	void test_constructor();
+	void runAll();
+
+	static void init(const std::istream& stream);
+	static std::shared_ptr<Test> init();
+
+private:
+	test_structs::test_Data m_data;
 };
+
 }

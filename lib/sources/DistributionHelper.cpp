@@ -1,4 +1,5 @@
 #include "DistributionHelper.h"
+
 namespace rand_distribution_helper {
 
 std::random_device randDevice()
@@ -19,20 +20,20 @@ std::normal_distribution<T> generateDistribution(const T &begin, const T &end)
 	return std::normal_distribution<T>(begin, end);
 }
 
-template<typename T, typename Alloc>
+template<typename T>
 std::vector<T> generateRandVector(const T &begin, const T &end, const size_t &size)
 {
 	auto rDist = generateDistribution(begin, end);
 	auto rGen = randGen();
-	auto result = std::vector<T, Alloc>(size);
+	auto result = std::vector<T>(size);
 	for (auto it = result.cbegin(); it != result.cend(); ++it) {
 		*it = std::round(rDist(rGen));
 	}
 	return result;
 }
 
-template<typename T, typename Alloc>
-std::vector<T, Alloc> generateByParams(Params<T> &&params)
+template<typename T>
+std::vector<T> generateByParams(Params<T> &&params)
 {
 	auto result = std::vector<T>(params.size);
 	for (auto it = result.cbegin(); it != result.cend(); ++it) {

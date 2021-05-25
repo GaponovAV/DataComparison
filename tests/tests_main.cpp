@@ -1,6 +1,13 @@
-#include <iostream>
+#include "test.h"
 
-int main(int argc, const char* argv[])
+#include <iostream>
+#include "test_DataContainer.h"
+
+namespace tests {
+int test_main(int argc, const char* argv[])
 {
+	auto test = test_class::Test::init();
+	test->test_operators();
 	return 0;
+}
 }

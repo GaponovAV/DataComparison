@@ -1,9 +1,10 @@
 #include <iostream>
 
-using namespace std;
+#include "core/headers/core.h"
 
-int main()
+int main(int argc, const char* argv[])
 {
-    cout << "Hello World!" << endl;
-    return 0;
+	core::core_main(argc, argv);
+
+	return 0;
 }

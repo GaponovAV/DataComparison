@@ -3,14 +3,14 @@
 #include "DataContainer.h"
 #include "DistributionHelper.h"
 
-template <typename T, typename Alloc = std::allocator<T>>
+template <typename T>
 class DataSetContainer
 {
 public:
 	DataSetContainer(const size_t& size = 0, bool isRand = false)
 	    : m_params(rand_distribution_helper::createDefaultParams<T>())
-	    , m_dataR1(std::vector<T, Alloc>(size))
-	    , m_dataR2(std::vector<T, Alloc>(size))
+	    , m_dataR1(std::vector<T>(size))
+	    , m_dataR2(std::vector<T>(size))
 	{
 		if (!isRand || size == 0) {
 			return;
@@ -29,7 +29,7 @@ public:
 		                                                        , size
 		});
 	};
-	DataSetContainer(const std::vector<T, Alloc> &dataR1, const std::vector<T, Alloc> &dataR2)
+	DataSetContainer(const std::vector<T> &dataR1, const std::vector<T> &dataR2)
 	    : m_params(rand_distribution_helper::createDefaultParams<T>())
 	    , m_dataR1(dataR1)
 	    , m_dataR2(dataR2)
@@ -46,16 +46,16 @@ public:
 		m_params.dist = std::normal_distribution<T>(begin, end);
 	}
 
-	DataSetContainer<T, Alloc> dataR1() const {
+	DataSetContainer<T> dataR1() const {
 		return m_dataR1;
 	}
 
-	DataSetContainer<T, Alloc> dataR2() const {
+	DataSetContainer<T> dataR2() const {
 		return m_dataR2;
 	}
 
 private:
 	rand_distribution_helper::Params<T> m_params;
-	DataContainer<T, Alloc> m_dataR1;
-	DataContainer<T, Alloc> m_dataR2;
+	DataContainer<T> m_dataR1;
+	DataContainer<T> m_dataR2;
 };

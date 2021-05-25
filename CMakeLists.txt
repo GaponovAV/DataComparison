@@ -9,7 +9,14 @@ add_subdirectory("lib")
 add_subdirectory("core")
 add_subdirectory("tests")
 
+set(headers
 
-add_executable(DataComparison main.cpp)
+)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE coreLib)
+set(sources
+
+)
+
+add_executable(${PROJECT_NAME} main.cpp)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE core)
