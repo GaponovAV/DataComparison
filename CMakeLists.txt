@@ -10,11 +10,9 @@ add_subdirectory("core")
 add_subdirectory("tests")
 
 set(headers
-	helper.h
 )
 
 set(sources
-	helper.cpp
 	main.cpp
 )
 

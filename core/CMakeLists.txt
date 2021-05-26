@@ -2,10 +2,12 @@ project (core)
 
 set(headers
 	headers/core.h
+	headers/ArgsParser.h
 )
 
 set(sources
 	sources/core.cpp
+	sources/ArgsParser.cpp
 )
 
 add_library(${PROJECT_NAME} ${sources} ${headers})
