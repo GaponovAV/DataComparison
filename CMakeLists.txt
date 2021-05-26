@@ -10,13 +10,14 @@ add_subdirectory("core")
 add_subdirectory("tests")
 
 set(headers
-
+	helper.h
 )
 
 set(sources
-
+	helper.cpp
+	main.cpp
 )
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} ${headers} ${sources})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE core)
