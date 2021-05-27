@@ -1,10 +1,14 @@
 #pragma once
 
+#include "../../lib/headers/DataSetContainer.h"
+
 #include <unordered_map>
 #include <string>
 #include <functional>
 #include <optional>
 #include <iostream>
+#include <tuple>
+#include <memory>
 
 namespace helper {
 
@@ -60,15 +64,14 @@ const auto argFromString =  std::unordered_map<Arg, ArgType> {
 	, {{"functions", 'f', FunctionsDesription}, ArgType::Functions}
 };
 
-template <typename Func, typename ...Args>
 struct ArgInfo
 {
 	std::optional<Arg> info;
 	std::optional<ArgType> type;
 	std::optional<SubArgType> subType;
-	std::optional<Func> func;
 
-	void run(Args&& ...args) {
+	template <typename Func, typename ...Args>
+	void run(Func &&func, Args&& ...args) {
 		if (!type || !func) {
 			std::cout << "ERROR";
 			return;
@@ -78,30 +81,29 @@ struct ArgInfo
 	}
 };
 
+using FuncContainer = std::unordered_map<ArgType, std::function<void()>>;
+
+class BaseFunction
+{
+public:
+	template<typename T>
+	static std::shared_ptr<BaseFunction> create(const DataSetContainer<T> &dataSet);
+
+	FuncContainer function();
+private:
+	template<typename T>
+	BaseFunction(const DataSetContainer<T> &dataSet);
+
+	FuncContainer m_function;
+};
+
 }
 
 namespace parser {
 
 const auto cShortSymbol = '-';
-void core_parser(int argc, const char *argv[]) {
-	helper::Arg cmdInfo;
-
-	for (int argIndex = 0; argIndex < argc; ++argIndex) {
-		const auto cmd = argv[argIndex];
-		if (!cmd) {
-			std::cout << "ERROR! " << __LINE__ << " cmad is nullptr";
-			continue;
-		}
-
-		if (cmd[0] == cShortSymbol) {
-			cmdInfo.symbol = cmd[1];
-		} else {
-			cmdInfo.name = cmd;
-		}
-
-		const auto argType = helper::parser::argFromString.at(cmdInfo);
-	}
-}
+void core_parser(int argc, const char *argv[]);
+void subArgType(helper::parser::ArgType type, int argIndex, const char *argv[]);
 
 
 }

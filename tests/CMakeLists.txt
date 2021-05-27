@@ -10,4 +10,4 @@ set(sources
 	tests_main.cpp
 )
 
-add_library(${PROJECT_NAME} ${sources} ${headers})
+add_library(${PROJECT_NAME} STATIC ${sources} ${headers})

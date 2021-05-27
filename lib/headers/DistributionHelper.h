@@ -12,6 +12,18 @@ struct Params
 	std::mt19937 gen;
 	std::normal_distribution<T> dist;
 	size_t size;
+
+	Params() = default;
+	Params(Params &&value) {
+		this->gen = gen;
+		this->dist = dist;
+		this->size = size;
+	}
+	Params(const Params &value) {
+		this->gen = gen;
+		this->dist = dist;
+		this->size = size;
+	}
 };
 
 std::random_device randDevice();

@@ -2,12 +2,26 @@
 
 #include <iostream>
 #include <math.h>
+#include <cassert>
+
+#include "../lib/headers/DataSetContainer.h"
 
 namespace {
 
 #define ASSERT(flag)                                                             \
     if (!(flag)) {                                                               \
         std::cout << "ASSERT: " << __FUNCTION__ << " " <<__LINE__ << std::endl;  \
+        assert(false);                                                           \
+    } else {                                                                     \
+        std::cout << "PASSED: " << __FUNCTION__ << std::endl;                    \
+    }
+
+#define VERIFY(flag)                                                             \
+    if ((flag)) {                                                               \
+        std::cout << "ASSERT: " << __FUNCTION__ << " " <<__LINE__ << std::endl;  \
+        assert(false);                                                           \
+    } else {                                                                     \
+        std::cout << "PASSED: " << __FUNCTION__ << std::endl;                    \
     }
 
 #define COMPARE(one, next, msg)                                         \
@@ -31,6 +45,112 @@ void test_operator_helper(const std::vector<T> &inputData)
 
 	DataContainer<T> test_data(data);
 	COMPARE(test_data, inputData, "Copy constructor");
+}
+
+template <typename T>
+void test_calculateTP(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateTP() == 0);
+}
+
+template <typename T>
+void test_calculateTN(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateTN() == 0);
+}
+
+template <typename T>
+void test_calculateFP(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateFP() == 0);
+}
+
+template <typename T>
+void test_calculateFN(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateFN() == 0);
+}
+
+template <typename T>
+void test_calculateTPR(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateTPR() == 0);
+}
+
+template <typename T>
+void test_calculateFPR(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateFPR() == 0);
+}
+
+template <typename T>
+void test_calculatePPV(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculatePPV() == 0);
+}
+
+template <typename T>
+void test_calculateNPV(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateNPV() == 0);
+}
+
+template <typename T>
+void test_calculateFDR(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateFDR() == 0);
+}
+
+template <typename T>
+void test_calculateFOR(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateFOR() == 0);
+}
+
+template <typename T>
+void test_calculateACC(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateACC() == 0);
+}
+
+template <typename T>
+void test_calculateF1(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateF1() == 0);
+}
+
+template <typename T>
+void test_calculateCorrelation(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateCorrelation() == 0);
+}
+
+template <typename T>
+void test_calculateEuclideanDistance(const DataSetContainer<T> & container)
+{
+	VERIFY(container.calculateEuclideanDistance() == 0);
+}
+
+template <typename T>
+void test_all_calculation(const DataSetContainer<T> & container)
+{
+	ASSERT(container.dataR1().size() == 0);
+	ASSERT(container.dataR2().size() == 0);
+	ASSERT(container.isEmpty());
+	test_calculateTP(container);
+	test_calculateTN(container);
+	test_calculateFP(container);
+	test_calculateFN(container);
+	test_calculateTPR(container);
+	test_calculateFPR(container);
+	test_calculatePPV(container);
+	test_calculateNPV(container);
+	test_calculateFDR(container);
+	test_calculateFOR(container);
+	test_calculateACC(container);
+	test_calculateF1(container);
+	test_calculateCorrelation(container);
+	test_calculateEuclideanDistance(container);
 }
 
 }
@@ -106,7 +226,9 @@ void Test::test_constructor()
 
 void Test::runAll()
 {
-	
+	auto dataSet = DataSetContainer<double>(m_data.m_doubleVector.value()
+	                                      , m_data.m_doubleVector.value());
+	test_all_calculation(dataSet);
 }
 
 void Test::init(const std::istream &stream)

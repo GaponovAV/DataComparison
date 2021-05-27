@@ -46,7 +46,7 @@ template<typename T>
 Params<T> createDefaultParams()
 {
 	Params<T> params;
-	params.dist = std::normal_distribution<T>();
+	params.dist = std::normal_distribution<T>(0, 10);
 	params.gen = randGen();
 	params.rDevice = randDevice();
 	params.size = 0;

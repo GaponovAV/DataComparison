@@ -10,7 +10,7 @@ set(sources
 	sources/ArgsParser.cpp
 )
 
-add_library(${PROJECT_NAME} ${sources} ${headers})
+add_library(${PROJECT_NAME} STATIC ${sources} ${headers})
 
 target_include_directories( ${PROJECT_NAME}
 	PUBLIC ${PROJECT_SOURCE_DIR}/headera
