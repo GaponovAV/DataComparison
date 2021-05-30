@@ -22,18 +22,21 @@ public:
 
 		m_dataR1 = rand_distribution_helper::generateByParams(createParams(size));
 		m_dataR1 = rand_distribution_helper::generateByParams(createParams(size));
+		calculateAllFTPN();
 	};
 	DataSetContainer(const std::vector<T> &dataR1, const std::vector<T> &dataR2)
 	    : m_dataR1(dataR1)
 	    , m_dataR2(dataR2)
 	{
 		assert(m_dataR1.size() == m_dataR2.size());
+		calculateAllFTPN();
 	}
 	DataSetContainer(const DataContainer<T> &dataR1, const DataContainer<T> &dataR2)
 	    : m_dataR1(dataR1)
 	    , m_dataR2(dataR2)
 	{
 		assert(m_dataR1.size() == m_dataR2.size());
+		calculateAllFTPN();
 	}
 
 	void generateGen(std::optional<rand_distribution_helper::Params<T>> &opParams) {
@@ -64,6 +67,10 @@ public:
 	void setDataR2(const DataContainer<T> &newDataR2) {
 		m_dataR2 = newDataR2;
 		calculateAllFTPN();
+	}
+	size_t size() const {
+		assert(m_dataR1.size() == m_dataR2.size());
+		return m_dataR1.size();
 	}
 
 	template<typename Container>
@@ -191,12 +198,17 @@ public:
 				}
 			}
 		}
-		
+
+		false_negative_in++;
+		true_positive_in++;
+		true_negative_in++;
+		false_positive_in++;
+
 		true_positive = true_positive_in;
 		true_negative = true_negative_in;
 		false_positive = false_positive_in;
 		false_negative = false_negative_in;
-		assert(isEmpty());
+		assert(!isEmpty());
 	}
 	
 	bool isEmpty() const

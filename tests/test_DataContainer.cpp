@@ -17,11 +17,11 @@ namespace {
     }
 
 #define VERIFY(flag)                                                             \
-    if ((flag)) {                                                               \
-        std::cout << "ASSERT: " << __FUNCTION__ << " " <<__LINE__ << std::endl;  \
-        assert(false);                                                           \
+    if ((flag)) {                                                                   \
+        std::cout << "PASSED: " << __FUNCTION__ << std::endl;                   \
     } else {                                                                     \
-        std::cout << "PASSED: " << __FUNCTION__ << std::endl;                    \
+          std::cout << "ASSERT: " << __FUNCTION__ << " " <<__LINE__ << std::endl;                  \
+        assert(false);                                                           \
     }
 
 #define COMPARE(one, next, msg)                                         \
@@ -50,25 +50,25 @@ void test_operator_helper(const std::vector<T> &inputData)
 template <typename T>
 void test_calculateTP(const DataSetContainer<T> & container)
 {
-	VERIFY(container.calculateTP() == 0);
+	ASSERT(container.calculateTP() != 0);
 }
 
 template <typename T>
 void test_calculateTN(const DataSetContainer<T> & container)
 {
-	VERIFY(container.calculateTN() == 0);
+	ASSERT(container.calculateTN() != 0);
 }
 
 template <typename T>
 void test_calculateFP(const DataSetContainer<T> & container)
 {
-	VERIFY(container.calculateFP() == 0);
+	ASSERT(container.calculateFP() != 0);
 }
 
 template <typename T>
 void test_calculateFN(const DataSetContainer<T> & container)
 {
-	VERIFY(container.calculateFN() == 0);
+	ASSERT(container.calculateFN() != 0);
 }
 
 template <typename T>
@@ -122,7 +122,7 @@ void test_calculateF1(const DataSetContainer<T> & container)
 template <typename T>
 void test_calculateCorrelation(const DataSetContainer<T> & container)
 {
-	VERIFY(container.calculateCorrelation() == 0);
+	VERIFY(container.calculateCorrelation() != 0);
 }
 
 template <typename T>
@@ -134,9 +134,8 @@ void test_calculateEuclideanDistance(const DataSetContainer<T> & container)
 template <typename T>
 void test_all_calculation(const DataSetContainer<T> & container)
 {
-	ASSERT(container.dataR1().size() == 0);
-	ASSERT(container.dataR2().size() == 0);
-	ASSERT(container.isEmpty());
+	ASSERT(container.size() != 0);
+	ASSERT(!container.isEmpty());
 	test_calculateTP(container);
 	test_calculateTN(container);
 	test_calculateFP(container);
@@ -245,7 +244,7 @@ std::shared_ptr<Test> Test::init() {
 	for (auto index = 0; index < vectorSize; ++index) {
 		intVector[index] = index;
 		charVector[index] = index +'0';
-		doubleVector[index] = pow(index / vectorSize, 2);
+		doubleVector[index] = std::pow(index + 1000/ vectorSize, 2);
 	}
 	
 	const auto testData = test_function::init(doubleVector, charVector, intVector);
